@@ -30,19 +30,13 @@ const Navbar = () => {
 
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background/95 backdrop-blur-sm" : "bg-transparent"
+          scrolled ? "bg-background/95 backdrop-blur-sm" : "bg-background/0"
         }`}
         role="navigation"
         aria-label="Main navigation"
       >
         <div className="container mx-auto flex items-center justify-between px-6 py-5 lg:px-8">
-          <a
-            href="#"
-            className={`font-impact text-xl tracking-tight transition-colors duration-300 ${
-              scrolled ? "text-foreground" : "text-[hsl(var(--surface-dark-foreground))]"
-            }`}
-            aria-label={`${siteConfig.brandName} home`}
-          >
+          <a href="#" className="font-impact text-xl tracking-tight text-foreground" aria-label={`${siteConfig.brandName} home`}>
             {siteConfig.brandName}
           </a>
 
@@ -53,9 +47,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleAnchorClick(e, link.href)}
-                className={`nav-link-underline pb-1 font-heading-light text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 ${
-                  scrolled ? "text-foreground/60 hover:text-foreground" : "text-[hsl(var(--surface-dark-foreground)/0.6)] hover:text-[hsl(var(--surface-dark-foreground))]"
-                }`}
+                className="nav-link-underline pb-1 font-heading-light text-[11px] uppercase tracking-[0.2em] text-foreground/50 transition-colors duration-300 hover:text-foreground"
               >
                 {link.label}
               </a>
@@ -74,14 +66,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={`min-h-[44px] min-w-[44px] ${
-                    scrolled ? "text-foreground" : "text-[hsl(var(--surface-dark-foreground))]"
-                  }`}
-                  aria-label="Open menu"
-                >
+                <Button variant="ghost" size="icon" className="min-h-[44px] min-w-[44px] text-foreground" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
