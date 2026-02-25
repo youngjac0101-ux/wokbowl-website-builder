@@ -6,28 +6,32 @@ const FourFSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="story" className="bg-secondary py-20" aria-label="Why The WOKBOWL">
-      <div className="container mx-auto px-4" ref={ref}>
+    <section id="story" className="bg-background py-28 md:py-40" aria-label="Why The WOKBOWL">
+      <div className="container mx-auto px-6 lg:px-8" ref={ref}>
+        <p
+          className={`text-center font-heading-light text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+        >
+          Why Us
+        </p>
         <h2
-          className={`mb-12 text-center font-heading text-2xl uppercase tracking-wider text-foreground md:text-3xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          style={{ transitionDelay: "100ms" }}
         >
           {siteConfig.sectionTitle}
         </h2>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-20 grid grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-4">
           {fourFs.map((item, i) => (
             <div
               key={item.title}
-              className={`rounded-lg border border-border bg-background p-8 text-center scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
-              style={{
-                transitionDelay: isVisible ? `${i * 100}ms` : "0ms",
-              }}
+              className={`group p-10 text-center transition-colors duration-300 hover:bg-secondary scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+              style={{ transitionDelay: isVisible ? `${(i + 2) * 100}ms` : "0ms" }}
             >
-              <div className="mb-4 text-4xl" aria-hidden="true">{item.emoji}</div>
-              <h3 className="mb-2 font-heading text-lg uppercase tracking-wider text-foreground">
+              <div className="mb-6 text-5xl" aria-hidden="true">{item.emoji}</div>
+              <h3 className="font-heading text-sm uppercase tracking-[0.2em] text-foreground">
                 {item.title}
               </h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
+              <p className="mt-3 font-heading-light text-sm leading-relaxed text-muted-foreground">{item.description}</p>
             </div>
           ))}
         </div>

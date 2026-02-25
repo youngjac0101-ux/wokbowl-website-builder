@@ -2,19 +2,19 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const steps = [
   {
-    number: "1",
+    number: "01",
     emoji: "🥢",
     title: "PICK YOUR BOWL",
     text: "Choose your favourite wok-fired bowl and base.",
   },
   {
-    number: "2",
+    number: "02",
     emoji: "🔥",
     title: "WE WOK IT FRESH",
     text: "Our robotic woks stir-fry your meal in 45 seconds flat.",
   },
   {
-    number: "3",
+    number: "03",
     emoji: "✅",
     title: "READY IN MINUTES",
     text: "Grab your freshly wok'd bowl. Dine in or take away.",
@@ -25,40 +25,39 @@ const HowItWorks = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="how-it-works" className="bg-background py-20" aria-label="How it works">
-      <div className="container mx-auto px-4" ref={ref}>
+    <section id="how-it-works" className="bg-secondary py-28 md:py-40" aria-label="How it works">
+      <div className="container mx-auto px-6 lg:px-8" ref={ref}>
+        <p
+          className={`text-center font-heading-light text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+        >
+          The Process
+        </p>
         <h2
-          className={`mb-14 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          style={{ transitionDelay: "100ms" }}
         >
           HOW IT WORKS
         </h2>
 
-        <div className="relative flex flex-col items-center gap-12 md:flex-row md:justify-center md:gap-0">
+        <div className="mt-20 grid grid-cols-1 gap-16 md:grid-cols-3 md:gap-8">
           {steps.map((step, i) => (
             <div
               key={step.number}
-              className={`relative flex flex-col items-center md:flex-1 scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
-              style={{ transitionDelay: isVisible ? `${(i + 1) * 150}ms` : "0ms" }}
+              className={`flex flex-col items-center text-center scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+              style={{ transitionDelay: isVisible ? `${(i + 2) * 150}ms` : "0ms" }}
             >
-              {/* Dashed connectors */}
-              {i < steps.length - 1 && (
-                <>
-                  <div className="absolute right-0 top-8 hidden h-0 w-1/2 translate-x-1/2 border-t-2 border-dashed border-primary md:block" aria-hidden="true" />
-                  <div className="absolute -bottom-6 left-1/2 block h-6 w-0 -translate-x-1/2 border-l-2 border-dashed border-primary md:hidden" aria-hidden="true" />
-                </>
-              )}
-
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
+              {/* Number */}
+              <span className="font-heading text-6xl text-foreground/10 md:text-7xl">
                 {step.number}
-              </div>
+              </span>
 
-              <div className="mt-4 text-4xl" aria-hidden="true">{step.emoji}</div>
+              <div className="mt-4 text-3xl" aria-hidden="true">{step.emoji}</div>
 
-              <h3 className="mt-3 font-heading text-base uppercase tracking-wider text-foreground">
+              <h3 className="mt-6 font-heading text-sm uppercase tracking-[0.2em] text-foreground">
                 {step.title}
               </h3>
 
-              <p className="mt-2 max-w-[200px] text-center text-sm text-muted-foreground">
+              <p className="mt-3 max-w-[240px] font-heading-light text-sm leading-relaxed text-muted-foreground">
                 {step.text}
               </p>
             </div>
