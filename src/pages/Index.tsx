@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import ImageBand from "@/components/ImageBand";
 import FourFSection from "@/components/FourFSection";
 import MenuSection from "@/components/MenuSection";
 import HowItWorks from "@/components/HowItWorks";
@@ -12,6 +13,7 @@ const Index = () => {
     <>
       <Navbar />
       <HeroSection />
+      <ImageBand />
       <FourFSection />
       <MenuSection />
       <HowItWorks />

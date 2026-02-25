@@ -9,12 +9,12 @@ const FourFSection = () => {
     <section id="story" className="bg-background py-28 md:py-40" aria-label="Why The WOKBOWL">
       <div className="container mx-auto px-6 lg:px-8" ref={ref}>
         <p
-          className={`text-center font-heading-light text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`text-center font-heading text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
         >
           Why Us
         </p>
         <h2
-          className={`mt-4 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 text-center font-display text-4xl text-foreground md:text-5xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
           style={{ transitionDelay: "100ms" }}
         >
           {siteConfig.sectionTitle}
