@@ -5,19 +5,19 @@ import { cn } from "@/lib/utils";
 const tagConfig: Record<string, { label: string; className: string }> = {
   popular: {
     label: "POPULAR",
-    className: "border border-primary text-primary bg-transparent",
+    className: "text-primary border-primary/30",
   },
   vegan: {
     label: "VEGAN",
-    className: "bg-[hsl(142,71%,45%)] text-white border-transparent",
+    className: "text-[hsl(142,71%,45%)] border-[hsl(142,71%,45%,0.3)]",
   },
   spicy: {
     label: "🌶️ SPICY",
-    className: "bg-destructive text-destructive-foreground border-transparent",
+    className: "text-destructive border-destructive/30",
   },
   new: {
     label: "NEW",
-    className: "bg-primary text-primary-foreground border-transparent",
+    className: "text-primary border-primary/30",
   },
 };
 
@@ -36,17 +36,16 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-lg border border-transparent p-2 transition-all duration-200 hover:-translate-y-1 hover:border-primary",
+        "group cursor-default transition-all duration-300",
         className
       )}
       style={style}
     >
       {/* Image */}
-      <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-lg bg-muted">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-secondary">
         {showPlaceholder && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground/40">
-            <span className="text-3xl">🍳</span>
-            <span className="text-xs">Photo coming soon</span>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground/30">
+            <span className="text-4xl">🍳</span>
           </div>
         )}
         <img
@@ -54,7 +53,7 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
           alt={item.name}
           loading="lazy"
           className={cn(
-            "h-full w-full object-cover transition-opacity duration-300",
+            "h-full w-full object-cover transition-transform duration-700 group-hover:scale-105",
             showPlaceholder ? "opacity-0" : "opacity-100"
           )}
           onLoad={() => setImgLoaded(true)}
@@ -64,7 +63,7 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
 
       {/* Tags */}
       {item.tags.length > 0 && (
-        <div className="mb-2 flex flex-wrap gap-1.5">
+        <div className="mt-4 flex flex-wrap gap-2">
           {item.tags.map((tag) => {
             const config = tagConfig[tag];
             if (!config) return null;
@@ -72,7 +71,7 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
               <span
                 key={tag}
                 className={cn(
-                  "inline-block rounded-sm border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider",
+                  "inline-block border px-2 py-0.5 text-[9px] font-heading uppercase tracking-[0.15em]",
                   config.className
                 )}
               >
@@ -84,15 +83,15 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
       )}
 
       {/* Name + Price */}
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="font-heading text-sm text-foreground">{item.name}</h3>
+      <div className="mt-3 flex items-baseline justify-between gap-4">
+        <h3 className="font-heading text-sm uppercase tracking-wider text-foreground">{item.name}</h3>
         <span className="shrink-0 font-heading text-sm text-primary">
           ${item.price.toFixed(2)}
         </span>
       </div>
 
       {/* Description */}
-      <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+      <p className="mt-2 line-clamp-2 font-heading-light text-[13px] leading-relaxed text-muted-foreground">
         {item.description}
       </p>
     </div>

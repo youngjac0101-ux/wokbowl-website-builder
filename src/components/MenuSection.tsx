@@ -11,32 +11,38 @@ const MenuSection = () => {
   const filtered = menuItems.filter((item) => item.category === activeCategory);
 
   return (
-    <section id="menu" className="bg-background py-20" aria-label="Menu">
-      <div className="container mx-auto px-4" ref={ref}>
+    <section id="menu" className="bg-background py-28 md:py-40" aria-label="Menu">
+      <div className="container mx-auto px-6 lg:px-8" ref={ref}>
         {/* Header */}
+        <p
+          className={`text-center font-heading-light text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+        >
+          Our Menu
+        </p>
         <h2
-          className={`text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          style={{ transitionDelay: "100ms" }}
         >
           THE MENU
         </h2>
         <p
-          className={`mt-3 text-center text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
-          style={{ transitionDelay: "100ms" }}
+          className={`mt-4 text-center font-heading-light text-sm text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          style={{ transitionDelay: "200ms" }}
         >
           Pick your bowl. We'll wok it fresh.
         </p>
 
         {/* Category Tabs */}
-        <div className="relative mt-10">
-          <div className="scroll-fade-edges flex gap-6 overflow-x-auto border-b border-border pb-0 scrollbar-none">
+        <div className="mt-16">
+          <div className="scroll-fade-edges flex justify-center gap-8 overflow-x-auto border-b border-border pb-0 scrollbar-none md:gap-12">
             {menuCategories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 className={cn(
-                  "shrink-0 border-b-2 pb-3 font-heading text-sm uppercase tracking-wider transition-colors min-h-[44px]",
+                  "shrink-0 border-b pb-4 font-heading text-[11px] uppercase tracking-[0.2em] transition-all duration-300 min-h-[44px]",
                   activeCategory === cat.id
-                    ? "border-primary text-primary"
+                    ? "border-foreground text-foreground"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 )}
                 aria-pressed={activeCategory === cat.id}
@@ -47,26 +53,26 @@ const MenuSection = () => {
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {/* Grid — generous spacing */}
+        <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {filtered.map((item, i) => (
             <MenuCard
               key={item.id}
               item={item}
               className={`scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
-              style={{ transitionDelay: isVisible ? `${(i + 2) * 80}ms` : "0ms" }}
+              style={{ transitionDelay: isVisible ? `${(i + 3) * 100}ms` : "0ms" }}
             />
           ))}
         </div>
 
         {/* Base note */}
-        <p className="mt-10 text-center text-sm text-muted-foreground">
-          All bowls include your choice of base: Special Fried Rice, Soy Sauce Chow Mein, or Steamed White Rice.
+        <p className="mt-16 text-center font-heading-light text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          All bowls include your choice of base — Special Fried Rice, Soy Sauce Chow Mein, or Steamed White Rice
         </p>
 
         {/* Allergen notice */}
-        <div className="mx-auto mt-6 max-w-2xl rounded-lg bg-secondary p-4 text-center text-xs text-muted-foreground">
-          ⚠️ ALLERGEN NOTICE: All dishes may contain traces of nuts, gluten, shellfish, soy, sesame, eggs, and dairy.
+        <div className="mx-auto mt-8 max-w-2xl border border-border p-6 text-center text-xs leading-relaxed text-muted-foreground">
+          ⚠️ ALLERGEN NOTICE — All dishes may contain traces of nuts, gluten, shellfish, soy, sesame, eggs, and dairy.
           Please inform staff of any allergies before ordering.
         </div>
       </div>
