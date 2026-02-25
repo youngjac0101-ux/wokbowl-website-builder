@@ -28,15 +28,15 @@ const HowItWorks = () => {
     <section id="how-it-works" className="bg-secondary py-28 md:py-40" aria-label="How it works">
       <div className="container mx-auto px-6 lg:px-8" ref={ref}>
         <p
-          className={`text-center font-heading-light text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`text-center font-heading text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
         >
           The Process
         </p>
         <h2
-          className={`mt-4 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 text-center font-display text-4xl text-foreground md:text-5xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
           style={{ transitionDelay: "100ms" }}
         >
-          HOW IT WORKS
+          How It Works
         </h2>
 
         <div className="mt-20 grid grid-cols-1 gap-16 md:grid-cols-3 md:gap-8">
@@ -46,8 +46,7 @@ const HowItWorks = () => {
               className={`flex flex-col items-center text-center scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
               style={{ transitionDelay: isVisible ? `${(i + 2) * 150}ms` : "0ms" }}
             >
-              {/* Number */}
-              <span className="font-heading text-6xl text-foreground/10 md:text-7xl">
+              <span className="font-display text-7xl text-foreground/8 md:text-8xl">
                 {step.number}
               </span>
 

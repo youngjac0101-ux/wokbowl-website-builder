@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,39 +6,39 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 13%;
+    --background: 30 50% 99%;
+    --foreground: 30 10% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    --card: 30 50% 99%;
+    --card-foreground: 30 10% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover: 30 50% 99%;
+    --popover-foreground: 30 10% 12%;
 
     --primary: 25 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 97%;
-    --secondary-foreground: 0 0% 13%;
+    --secondary: 30 30% 95%;
+    --secondary-foreground: 30 10% 12%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 30 20% 94%;
+    --muted-foreground: 30 8% 48%;
 
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 13%;
+    --accent: 30 30% 95%;
+    --accent-foreground: 30 10% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 92%;
-    --input: 0 0% 92%;
+    --border: 30 15% 90%;
+    --input: 30 15% 90%;
     --ring: 25 100% 50%;
 
     --radius: 0.5rem;
 
-    /* Dark surface for hero/footer */
-    --surface-dark: 0 0% 8%;
-    --surface-dark-foreground: 0 0% 96%;
+    /* Dark surface for footer */
+    --surface-dark: 25 15% 8%;
+    --surface-dark-foreground: 30 20% 92%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -51,32 +51,32 @@
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 96%;
+    --background: 25 15% 8%;
+    --foreground: 30 20% 92%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 96%;
+    --card: 25 12% 11%;
+    --card-foreground: 30 20% 92%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 25 12% 11%;
+    --popover-foreground: 30 20% 92%;
 
     --primary: 25 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 0 0% 96%;
+    --secondary: 25 10% 14%;
+    --secondary-foreground: 30 20% 92%;
 
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 25 10% 14%;
+    --muted-foreground: 30 10% 55%;
 
-    --accent: 0 0% 14%;
-    --accent-foreground: 0 0% 96%;
+    --accent: 25 10% 14%;
+    --accent-foreground: 30 20% 92%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 96%;
+    --destructive-foreground: 30 20% 92%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
+    --border: 25 10% 18%;
+    --input: 25 10% 18%;
     --ring: 25 100% 50%;
 
     --sidebar-background: 240 5.9% 10%;
@@ -101,26 +101,39 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'DM Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
 
 @layer utilities {
+  /* Display / Brand font — Playfair Display serif */
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+  }
+
+  .font-display-light {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+  }
+
+  /* Impact for the logo wordmark only */
   .font-impact {
     font-family: Impact, 'Arial Black', sans-serif;
     font-weight: normal;
     letter-spacing: -0.02em;
   }
 
+  /* Body headings — DM Sans bold */
   .font-heading {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
   }
 
   .font-heading-light {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 400;
   }
 
@@ -143,7 +156,7 @@
 
   .nav-link-underline::after {
     content: '';
-    @apply absolute bottom-0 left-0 h-[1px] w-full origin-bottom-right scale-x-0 bg-foreground transition-transform duration-300;
+    @apply absolute bottom-0 left-0 h-[1px] w-full origin-bottom-right scale-x-0 bg-primary transition-transform duration-300;
   }
 
   .nav-link-underline:hover::after {
@@ -169,5 +182,34 @@
   .bg-surface-dark {
     background-color: hsl(var(--surface-dark));
     color: hsl(var(--surface-dark-foreground));
+  }
+
+  /* Fire glow pulse */
+  @keyframes fire-glow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
+
+  .animate-fire-glow {
+    animation: fire-glow 4s ease-in-out infinite;
+  }
+
+  /* Spark rise */
+  @keyframes spark-rise {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(1);
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-120px) scale(0.3);
+    }
+  }
+
+  .animate-spark {
+    animation: spark-rise var(--spark-duration, 3s) ease-out var(--spark-delay, 0s) infinite;
   }
 }

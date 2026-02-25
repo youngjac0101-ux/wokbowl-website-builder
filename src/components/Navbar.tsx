@@ -30,7 +30,7 @@ const Navbar = () => {
 
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background/95 backdrop-blur-sm" : "bg-background/0"
+          scrolled ? "bg-background/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
         }`}
         role="navigation"
         aria-label="Main navigation"
@@ -47,7 +47,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleAnchorClick(e, link.href)}
-                className="nav-link-underline pb-1 font-heading-light text-[11px] uppercase tracking-[0.2em] text-foreground/50 transition-colors duration-300 hover:text-foreground"
+                className="nav-link-underline pb-1 font-heading-light text-[11px] uppercase tracking-[0.2em] text-foreground/50 transition-colors duration-300 hover:text-primary"
               >
                 {link.label}
               </a>
@@ -78,7 +78,7 @@ const Navbar = () => {
                       <a
                         href={link.href}
                         onClick={(e) => handleAnchorClick(e, link.href)}
-                        className="min-h-[44px] font-heading text-2xl uppercase tracking-wider text-foreground/40 transition-colors hover:text-foreground flex items-center"
+                        className="min-h-[44px] font-display text-2xl text-foreground/40 transition-colors hover:text-primary flex items-center"
                       >
                         {link.label}
                       </a>

@@ -9,15 +9,15 @@ const FindUs = () => {
     <section id="find-us" className="bg-background py-28 md:py-40" aria-label="Find us">
       <div className="container mx-auto px-6 lg:px-8" ref={ref}>
         <p
-          className={`text-center font-heading-light text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`text-center font-heading text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
         >
           Location
         </p>
         <h2
-          className={`mt-4 text-center font-heading text-3xl uppercase tracking-wider text-foreground md:text-4xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 text-center font-display text-4xl text-foreground md:text-5xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
           style={{ transitionDelay: "100ms" }}
         >
-          FIND US
+          Find Us
         </h2>
 
         <div
@@ -25,7 +25,7 @@ const FindUs = () => {
           style={{ transitionDelay: "200ms" }}
         >
           {/* Map */}
-          <div className="overflow-hidden rounded-lg bg-secondary" style={{ minHeight: 400 }}>
+          <div className="overflow-hidden bg-secondary" style={{ minHeight: 400 }}>
             <iframe
               src={siteConfig.mapEmbedUrl}
               width="100%"
@@ -74,10 +74,10 @@ const FindUs = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground" aria-label="Instagram">
+              <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center text-muted-foreground transition-colors hover:text-primary" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href={siteConfig.socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground" aria-label="TikTok">
+              <a href={siteConfig.socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center text-muted-foreground transition-colors hover:text-primary" aria-label="TikTok">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.67a8.21 8.21 0 0 0 4.76 1.52V6.74a4.85 4.85 0 0 1-1-.05Z" />
                 </svg>

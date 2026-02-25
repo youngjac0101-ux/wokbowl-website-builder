@@ -36,16 +36,17 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
   return (
     <div
       className={cn(
-        "group cursor-default transition-all duration-300",
+        "group cursor-default transition-all duration-300 hover:-translate-y-1",
         className
       )}
       style={style}
     >
-      {/* Image */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-secondary">
+      {/* Image — large 4:3 hero area */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-secondary">
         {showPlaceholder && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground/30">
-            <span className="text-4xl">🍳</span>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground/40">
+            <span className="text-5xl">🍳</span>
+            <span className="font-heading text-[9px] uppercase tracking-[0.2em]">Photo coming soon</span>
           </div>
         )}
         <img
@@ -61,39 +62,42 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
         />
       </div>
 
-      {/* Tags */}
-      {item.tags.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {item.tags.map((tag) => {
-            const config = tagConfig[tag];
-            if (!config) return null;
-            return (
-              <span
-                key={tag}
-                className={cn(
-                  "inline-block border px-2 py-0.5 text-[9px] font-heading uppercase tracking-[0.15em]",
-                  config.className
-                )}
-              >
-                {config.label}
-              </span>
-            );
-          })}
+      {/* Content — generous spacing */}
+      <div className="pt-5">
+        {/* Tags */}
+        {item.tags.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-2">
+            {item.tags.map((tag) => {
+              const config = tagConfig[tag];
+              if (!config) return null;
+              return (
+                <span
+                  key={tag}
+                  className={cn(
+                    "inline-block border px-2 py-0.5 text-[9px] font-heading uppercase tracking-[0.15em]",
+                    config.className
+                  )}
+                >
+                  {config.label}
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Name + Price */}
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="font-display text-lg text-foreground leading-tight">{item.name}</h3>
+          <span className="shrink-0 font-heading text-sm text-primary">
+            ${item.price.toFixed(2)}
+          </span>
         </div>
-      )}
 
-      {/* Name + Price */}
-      <div className="mt-3 flex items-baseline justify-between gap-4">
-        <h3 className="font-heading text-sm uppercase tracking-wider text-foreground">{item.name}</h3>
-        <span className="shrink-0 font-heading text-sm text-primary">
-          ${item.price.toFixed(2)}
-        </span>
+        {/* Description */}
+        <p className="mt-2 line-clamp-2 font-heading-light text-[13px] leading-relaxed text-muted-foreground">
+          {item.description}
+        </p>
       </div>
-
-      {/* Description */}
-      <p className="mt-2 line-clamp-2 font-heading-light text-[13px] leading-relaxed text-muted-foreground">
-        {item.description}
-      </p>
     </div>
   );
 };
