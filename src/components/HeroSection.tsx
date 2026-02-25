@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 import { siteConfig } from "@/data/siteConfig";
-import { platformLinks } from "@/data/platformLinks";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
@@ -112,17 +111,11 @@ const HeroSection = () => {
             View Menu
           </Button>
           <Button
-            asChild
-            className="min-h-[48px] rounded-none px-10 py-3 font-heading text-xs uppercase tracking-[0.2em] transition-all duration-200 hover:brightness-95"
+            disabled
+            className="min-h-[48px] rounded-none px-10 py-3 font-heading text-xs uppercase tracking-[0.2em] cursor-not-allowed opacity-90"
+            aria-label="Coming soon"
           >
-            <a
-              href={platformLinks.ubereats.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={platformLinks.ubereats.cta}
-            >
-              Order Now
-            </a>
+            Coming Soon
           </Button>
         </div>
       </div>

@@ -1,14 +1,52 @@
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { menuItems, menuCategories } from "@/data/menu";
 import MenuCard from "@/components/MenuCard";
 import { cn } from "@/lib/utils";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MenuSection = () => {
-  const [activeCategory, setActiveCategory] = useState<string>("signature");
+  const [activeCategory, setActiveCategory] = useState<string>("wok-bowls");
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const tabsRef = useRef<HTMLDivElement>(null);
   const { ref, isVisible } = useScrollAnimation();
 
   const filtered = menuItems.filter((item) => item.category === activeCategory);
+
+  const updateScrollState = useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 2);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 2);
+  }, []);
+
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    updateScrollState();
+    el.addEventListener("scroll", updateScrollState);
+    window.addEventListener("resize", updateScrollState);
+    return () => {
+      el.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [updateScrollState]);
+
+  const scrollTabs = (direction: "left" | "right") => {
+    const el = tabsRef.current;
+    if (!el) return;
+    const step = el.clientWidth * 0.6;
+    el.scrollBy({ left: direction === "left" ? -step : step, behavior: "smooth" });
+  };
+
+  const handleCategoryClick = (catId: string) => {
+    setActiveCategory(catId);
+    const el = tabsRef.current;
+    if (!el) return;
+    const tab = el.querySelector(`[data-category-id="${catId}"]`) as HTMLElement | null;
+    if (tab) tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  };
 
   return (
     <section id="menu" className="bg-background py-28 md:py-40" aria-label="Menu">
@@ -32,20 +70,48 @@ const MenuSection = () => {
           Pick your bowl. We'll wok it fresh.
         </p>
 
-        {/* Category Tabs */}
-        <div className="mt-16">
-          <div className="scroll-fade-edges flex justify-center gap-8 overflow-x-auto border-b border-border pb-0 scrollbar-none md:gap-12">
+        {/* Category Tabs — 与 menu.ts 的 menuCategories 同步，支持左右滑动 */}
+        <div className="mt-16 relative">
+          {canScrollLeft && (
+            <button
+              type="button"
+              onClick={() => scrollTabs("left")}
+              className="absolute left-0 top-0 z-10 flex h-full min-h-[52px] w-10 items-center justify-center bg-background/90 text-foreground shadow-[4px_0_12px_rgba(0,0,0,0.06)] transition-opacity hover:opacity-80 md:w-12"
+              aria-label="Scroll menu categories left"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          )}
+          {canScrollRight && (
+            <button
+              type="button"
+              onClick={() => scrollTabs("right")}
+              className="absolute right-0 top-0 z-10 flex h-full min-h-[52px] w-10 items-center justify-center bg-background/90 text-foreground shadow-[-4px_0_12px_rgba(0,0,0,0.06)] transition-opacity hover:opacity-80 md:w-12"
+              aria-label="Scroll menu categories right"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          )}
+          <div
+            ref={tabsRef}
+            className="scroll-fade-edges flex gap-6 overflow-x-auto border-b border-border px-10 pb-0 scroll-smooth scrollbar-none md:gap-10 md:px-12"
+            style={{ scrollBehavior: "smooth" }}
+            role="tablist"
+            aria-label="Menu categories"
+          >
             {menuCategories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
+                data-category-id={cat.id}
+                role="tab"
+                aria-selected={activeCategory === cat.id}
+                onClick={() => handleCategoryClick(cat.id)}
                 className={cn(
-                  "shrink-0 border-b pb-4 font-heading text-[11px] uppercase tracking-[0.2em] transition-all duration-300 min-h-[44px]",
+                  "shrink-0 border-b-2 pb-4 font-heading text-[11px] uppercase tracking-[0.2em] transition-all duration-300 min-h-[44px] whitespace-nowrap",
                   activeCategory === cat.id
                     ? "border-primary text-foreground"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 )}
-                aria-pressed={activeCategory === cat.id}
               >
                 {cat.label}
               </button>
@@ -65,10 +131,12 @@ const MenuSection = () => {
           ))}
         </div>
 
-        {/* Base note */}
-        <p className="mt-16 text-center font-heading-light text-xs text-muted-foreground">
-          All bowls include your choice of base — Special Fried Rice, Soy Sauce Chow Mein, or Steamed White Rice
-        </p>
+        {/* Base note — only for Wok Bowls */}
+        {activeCategory === "wok-bowls" && (
+          <p className="mt-16 text-center font-heading-light text-xs text-muted-foreground">
+            All bowls include your choice of base — Special Fried Rice, Soy Sauce Chow Mein, or Steamed White Rice
+          </p>
+        )}
 
         {/* Allergen notice */}
         <div className="mx-auto mt-8 max-w-2xl border border-border p-6 text-center text-xs leading-relaxed text-muted-foreground">

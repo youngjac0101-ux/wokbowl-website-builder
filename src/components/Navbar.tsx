@@ -3,10 +3,11 @@ import { Menu } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 import { platformLinks } from "@/data/platformLinks";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -14,9 +15,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const scrollToSection = (href: string) => {
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleDesktopNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    scrollToSection(href);
+  };
+
+  const handleMobileNavClick = (href: string) => {
+    setMobileMenuOpen(false);
+    requestAnimationFrame(() => {
+      setTimeout(() => scrollToSection(href), 150);
+    });
   };
 
   return (
@@ -46,25 +59,24 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={(e) => handleAnchorClick(e, link.href)}
+                onClick={(e) => handleDesktopNavClick(e, link.href)}
                 className="nav-link-underline pb-1 font-heading-light text-[11px] uppercase tracking-[0.2em] text-foreground/50 transition-colors duration-300 hover:text-primary"
               >
                 {link.label}
               </a>
             ))}
             <Button
-              asChild
-              className="min-h-[40px] rounded-none px-6 py-2 font-heading text-[10px] uppercase tracking-[0.2em] transition-all duration-200 hover:brightness-95"
+              disabled
+              className="min-h-[40px] rounded-none px-6 py-2 font-heading text-[10px] uppercase tracking-[0.2em] cursor-not-allowed opacity-90"
+              aria-label="Coming soon"
             >
-              <a href={platformLinks.ubereats.url} target="_blank" rel="noopener noreferrer" aria-label="Order now">
-                Order
-              </a>
+              Coming Soon
             </Button>
           </div>
 
-          {/* Mobile */}
+          {/* Mobile sidebar */}
           <div className="md:hidden">
-            <Sheet>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="min-h-[44px] min-w-[44px] text-foreground" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
@@ -72,24 +84,25 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent side="right" className="flex w-full max-w-full flex-col bg-background sm:w-80 sm:max-w-sm border-none">
                 <SheetTitle className="font-impact text-xl tracking-tight">{siteConfig.brandName}</SheetTitle>
-                <div className="mt-12 flex flex-1 flex-col gap-8">
+                <nav className="mt-12 flex flex-1 flex-col gap-8" aria-label="Mobile navigation">
                   {siteConfig.navLinks.map((link) => (
-                    <SheetClose key={link.href} asChild>
-                      <a
-                        href={link.href}
-                        onClick={(e) => handleAnchorClick(e, link.href)}
-                        className="min-h-[44px] font-display text-2xl text-foreground/40 transition-colors hover:text-primary flex items-center"
-                      >
-                        {link.label}
-                      </a>
-                    </SheetClose>
+                    <button
+                      key={link.href}
+                      type="button"
+                      onClick={() => handleMobileNavClick(link.href)}
+                      className="min-h-[44px] text-left font-display text-2xl text-foreground/80 transition-colors hover:text-primary"
+                    >
+                      {link.label}
+                    </button>
                   ))}
-                  <Button asChild className="mt-8 min-h-[48px] w-full rounded-none font-heading text-xs uppercase tracking-[0.2em]">
-                    <a href={platformLinks.ubereats.url} target="_blank" rel="noopener noreferrer">
-                      Order Now
-                    </a>
+                  <Button
+                    disabled
+                    className="mt-8 min-h-[48px] w-full rounded-none font-heading text-xs uppercase tracking-[0.2em] cursor-not-allowed opacity-90"
+                    aria-label="Coming soon"
+                  >
+                    Coming Soon
                   </Button>
-                </div>
+                </nav>
               </SheetContent>
             </Sheet>
           </div>

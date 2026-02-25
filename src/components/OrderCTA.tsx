@@ -18,20 +18,23 @@ const OrderCTA = () => {
           className={`mt-4 font-display text-4xl text-foreground md:text-6xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
           style={{ transitionDelay: "100ms" }}
         >
-          Order Ahead
+          Coming Soon
         </h2>
+
+        <p className={`mt-6 font-heading-light text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`} style={{ transitionDelay: "200ms" }}>
+          Online ordering and delivery links will be available when we open.
+        </p>
 
         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
           {platforms.map((p, i) => (
             <Button
               key={p.label}
-              asChild
-              className={`min-h-[48px] rounded-none px-8 py-3 font-heading text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:brightness-95 hover:-translate-y-0.5 hover:shadow-lg scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+              disabled
+              className={`min-h-[48px] rounded-none px-8 py-3 font-heading text-[10px] uppercase tracking-[0.2em] cursor-not-allowed opacity-90 scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
               style={{ transitionDelay: isVisible ? `${(i + 2) * 100}ms` : "0ms" }}
+              aria-label="Coming soon"
             >
-              <a href={p.url} target="_blank" rel="noopener noreferrer" aria-label={`${p.cta} (opens in new tab)`}>
-                {p.cta}
-              </a>
+              Coming Soon
             </Button>
           ))}
         </div>

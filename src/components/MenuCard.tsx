@@ -50,7 +50,7 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
           </div>
         )}
         <img
-          src={item.image}
+          src={`${item.image}?v=${import.meta.env.VITE_MENU_IMAGE_VERSION ?? "1"}`}
           alt={item.name}
           loading="lazy"
           className={cn(
