@@ -23,41 +23,43 @@ const tagConfig: Record<string, { label: string; className: string }> = {
 
 interface MenuCardProps {
   item: MenuItem;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
-const MenuCard = ({ item }: MenuCardProps) => {
-  const [imgError, setImgError] = useState(true);
+const MenuCard = ({ item, style, className }: MenuCardProps) => {
+  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  const showPlaceholder = imgError || !imgLoaded;
 
   return (
-    <div className="flex flex-col">
+    <div
+      className={cn(
+        "flex flex-col rounded-lg border border-transparent p-2 transition-all duration-200 hover:-translate-y-1 hover:border-primary",
+        className
+      )}
+      style={style}
+    >
       {/* Image */}
       <div className="relative mb-3 aspect-square w-full overflow-hidden rounded-lg bg-muted">
-        {imgError ? (
-          <div className="flex h-full w-full items-center justify-center text-muted-foreground/40">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 12c-2-2.67-6-2.67-6 0 0 4 6 8 6 8s6-4 6-8c0-2.67-4-2.67-6 0Z" />
-              <path d="M17 4c-2 0-3.5 1.5-5 3-1.5-1.5-3-3-5-3" />
-              <circle cx="12" cy="6" r="1" />
-            </svg>
+        {showPlaceholder && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground/40">
+            <span className="text-3xl">🍳</span>
+            <span className="text-xs">Photo coming soon</span>
           </div>
-        ) : (
-          <img
-            src={item.image}
-            alt={item.name}
-            className="h-full w-full object-cover"
-            onError={() => setImgError(true)}
-          />
         )}
+        <img
+          src={item.image}
+          alt={item.name}
+          loading="lazy"
+          className={cn(
+            "h-full w-full object-cover transition-opacity duration-300",
+            showPlaceholder ? "opacity-0" : "opacity-100"
+          )}
+          onLoad={() => setImgLoaded(true)}
+          onError={() => setImgError(true)}
+        />
       </div>
 
       {/* Tags */}
