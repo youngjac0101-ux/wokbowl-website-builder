@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import FourFSection from "@/components/FourFSection";
+import MenuSection from "@/components/MenuSection";
 import { siteConfig } from "@/data/siteConfig";
 
 const Index = () => {
@@ -10,13 +11,7 @@ const Index = () => {
       <HeroSection />
       <FourFSection />
 
-      {/* Placeholder sections */}
-      <section id="menu" className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="font-heading text-2xl uppercase tracking-wider text-foreground">Menu</h2>
-          <p className="mt-4 text-muted-foreground">Coming soon</p>
-        </div>
-      </section>
+      <MenuSection />
 
       <section id="how-it-works" className="bg-secondary py-20">
         <div className="container mx-auto px-4 text-center">
