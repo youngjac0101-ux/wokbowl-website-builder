@@ -1,13 +1,37 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import FourFSection from "@/components/FourFSection";
+import { siteConfig } from "@/data/siteConfig";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <HeroSection />
+      <FourFSection />
+
+      {/* Placeholder sections */}
+      <section id="menu" className="py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-heading text-2xl uppercase tracking-wider text-foreground">Menu</h2>
+          <p className="mt-4 text-muted-foreground">Coming soon</p>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="bg-secondary py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-heading text-2xl uppercase tracking-wider text-foreground">How It Works</h2>
+          <p className="mt-4 text-muted-foreground">Coming soon</p>
+        </div>
+      </section>
+
+      <section id="find-us" className="py-20">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-heading text-2xl uppercase tracking-wider text-foreground">Find Us</h2>
+          <p className="mt-4 text-muted-foreground">{siteConfig.address}</p>
+        </div>
+      </section>
+    </>
   );
 };
 
