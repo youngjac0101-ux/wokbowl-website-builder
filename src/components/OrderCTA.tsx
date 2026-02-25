@@ -7,7 +7,7 @@ const OrderCTA = () => {
   const platforms = [platformLinks.ubereats, platformLinks.doordash, platformLinks.menulog];
 
   return (
-    <section className="bg-surface-dark py-28 md:py-40" aria-label="Order ahead">
+    <section className="bg-background py-28 md:py-40" aria-label="Order ahead">
       <div className="container mx-auto px-6 lg:px-8 text-center" ref={ref}>
         <p
           className={`font-heading-light text-[11px] uppercase tracking-[0.3em] text-primary scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
@@ -15,7 +15,7 @@ const OrderCTA = () => {
           Skip the queue
         </p>
         <h2
-          className={`mt-4 font-heading text-3xl uppercase tracking-wider text-[hsl(var(--surface-dark-foreground))] md:text-5xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+          className={`mt-4 font-heading text-3xl uppercase tracking-wider text-foreground md:text-5xl scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
           style={{ transitionDelay: "100ms" }}
         >
           ORDER AHEAD
@@ -26,8 +26,7 @@ const OrderCTA = () => {
             <Button
               key={p.label}
               asChild
-              variant="outline"
-              className={`min-h-[48px] rounded-none border-[hsl(var(--surface-dark-foreground)/0.2)] bg-transparent px-8 py-3 font-heading text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--surface-dark-foreground))] transition-all duration-300 hover:border-primary hover:text-primary scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+              className={`min-h-[48px] rounded-none px-8 py-3 font-heading text-[10px] uppercase tracking-[0.2em] transition-all duration-300 hover:brightness-95 scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
               style={{ transitionDelay: isVisible ? `${(i + 2) * 100}ms` : "0ms" }}
             >
               <a href={p.url} target="_blank" rel="noopener noreferrer" aria-label={`${p.cta} (opens in new tab)`}>
