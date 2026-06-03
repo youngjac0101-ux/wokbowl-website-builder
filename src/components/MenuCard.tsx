@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Plus, Check } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
 
 const tagConfig: Record<string, { label: string; className: string }> = {
   popular: {
@@ -30,6 +32,14 @@ interface MenuCardProps {
 const MenuCard = ({ item, style, className }: MenuCardProps) => {
   const [imgError, setImgError] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
+  const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
+
+  const handleAdd = () => {
+    addItem({ id: item.id, name: item.name, price: item.price, image: item.image });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   const showPlaceholder = imgError || !imgLoaded;
 
@@ -97,6 +107,23 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
         <p className="mt-2 line-clamp-2 font-heading-light text-[13px] leading-relaxed text-muted-foreground">
           {item.description}
         </p>
+
+        {/* Add to Cart */}
+        <button
+          onClick={handleAdd}
+          className={cn(
+            "mt-3 w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300",
+            added
+              ? "bg-green-500 text-white"
+              : "bg-[var(--orange-light)] text-[var(--orange)] hover:bg-[var(--orange)] hover:text-white"
+          )}
+        >
+          {added ? (
+            <><Check className="w-4 h-4" /> Added!</>
+          ) : (
+            <><Plus className="w-4 h-4" /> Add to Order</>
+          )}
+        </button>
       </div>
     </div>
   );

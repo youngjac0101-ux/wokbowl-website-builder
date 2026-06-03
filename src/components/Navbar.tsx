@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { Menu } from "lucide-react";
+import { Menu, ShoppingBag } from "lucide-react";
 import { siteConfig } from "@/data/siteConfig";
 import { platformLinks } from "@/data/platformLinks";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { useCart } from "@/context/CartContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { count, openCart } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -65,17 +67,36 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <Button
-              disabled
-              className="min-h-[40px] rounded-none px-6 py-2 font-heading text-[10px] uppercase tracking-[0.2em] cursor-not-allowed opacity-90"
-              aria-label="Coming soon"
+            {/* Cart button */}
+            <button
+              onClick={openCart}
+              className="relative flex items-center gap-2 min-h-[40px] rounded-none px-5 py-2 font-heading text-[10px] uppercase tracking-[0.2em] bg-primary text-white hover:bg-primary/90 transition-colors"
+              aria-label="View cart"
             >
-              Coming Soon
-            </Button>
+              <ShoppingBag className="w-4 h-4" />
+              Order Now
+              {count > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-white text-primary text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border border-primary">
+                  {count}
+                </span>
+              )}
+            </button>
           </div>
 
-          {/* Mobile sidebar */}
-          <div className="md:hidden">
+          {/* Mobile: cart + hamburger */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={openCart}
+              className="relative p-2 text-foreground"
+              aria-label="View cart"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              {count > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 bg-primary text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {count}
+                </span>
+              )}
+            </button>
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="min-h-[44px] min-w-[44px] text-foreground" aria-label="Open menu">
@@ -95,13 +116,13 @@ const Navbar = () => {
                       {link.label}
                     </button>
                   ))}
-                  <Button
-                    disabled
-                    className="mt-8 min-h-[48px] w-full rounded-none font-heading text-xs uppercase tracking-[0.2em] cursor-not-allowed opacity-90"
-                    aria-label="Coming soon"
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); openCart(); }}
+                    className="mt-8 min-h-[48px] w-full bg-primary text-white font-heading text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2"
                   >
-                    Coming Soon
-                  </Button>
+                    <ShoppingBag className="w-4 h-4" />
+                    Order Now {count > 0 && `(${count})`}
+                  </button>
                 </nav>
               </SheetContent>
             </Sheet>
