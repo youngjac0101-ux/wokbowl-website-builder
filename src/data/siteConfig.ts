@@ -6,7 +6,7 @@ export const siteConfig = {
   subtitle: "Fast. Fresh. Fusion. Wok. — Neutral Bay.",
   sectionTitle: "WHY THE WOKBOWL?",
 
-  address: "123 Military Road, Neutral Bay NSW 2089",
+  address: "Shop 21, 116 Military Road, Neutral Bay NSW 2089",
   phone: "(02) 9953 0000",
   email: "hello@thewokbowl.com.au",
   mapUrl: "https://maps.google.com/?q=Neutral+Bay+NSW+2089",
