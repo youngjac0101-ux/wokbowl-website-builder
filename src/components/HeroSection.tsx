@@ -111,11 +111,11 @@ const HeroSection = () => {
             View Menu
           </Button>
           <Button
-            disabled
-            className="min-h-[48px] rounded-none px-10 py-3 font-heading text-xs uppercase tracking-[0.2em] cursor-not-allowed opacity-90"
-            aria-label="Coming soon"
+            className="min-h-[48px] rounded-none px-10 py-3 font-heading text-xs uppercase tracking-[0.2em]"
+            onClick={() => document.querySelector("#order")?.scrollIntoView({ behavior: "smooth" })}
+            aria-label="Order now"
           >
-            Coming Soon
+            Order Now
           </Button>
         </div>
       </div>

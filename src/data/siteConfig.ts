@@ -2,8 +2,8 @@ export const siteConfig = {
   brandName: "THE WOKBOWL",
   brandNameLine1: "THE",
   brandNameLine2: "WOKBOWL",
-  tagline: "FRESHLY WOK'D",
-  subtitle: "Wok-fired bowls in under 5 minutes. Neutral Bay.",
+  tagline: "SYDNEY ASIAN KITCHEN",
+  subtitle: "Fast. Fresh. Fusion. Wok. — Neutral Bay.",
   sectionTitle: "WHY THE WOKBOWL?",
 
   address: "123 Military Road, Neutral Bay NSW 2089",
