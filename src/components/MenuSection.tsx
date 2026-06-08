@@ -138,10 +138,13 @@ const MenuSection = () => {
           </p>
         )}
 
-        {/* Allergen notice */}
-        <div className="mx-auto mt-8 max-w-2xl border border-border p-6 text-center text-xs leading-relaxed text-muted-foreground">
-          ⚠️ ALLERGEN NOTICE — All dishes may contain traces of nuts, gluten, shellfish, soy, sesame, eggs, and dairy.
-          Please inform staff of any allergies before ordering.
+        {/* Allergen notice — legally required, do not remove */}
+        <div className="mx-auto mt-8 max-w-2xl border border-border p-6 text-center leading-relaxed text-muted-foreground">
+          <p className="font-heading text-[10px] uppercase tracking-[0.2em] mb-2">Allergen Notice</p>
+          <p className="font-heading-light text-xs">
+            All dishes may contain traces of nuts, gluten, shellfish, soy, sesame, eggs, and dairy.
+            Please inform staff of any allergies before ordering.
+          </p>
         </div>
       </div>
     </section>
