@@ -14,7 +14,7 @@ const tagConfig: Record<string, { label: string; className: string }> = {
     className: "text-[hsl(142,71%,45%)] border-[hsl(142,71%,45%,0.3)]",
   },
   spicy: {
-    label: "🌶️ SPICY",
+    label: "SPICY",
     className: "text-destructive border-destructive/30",
   },
   new: {
@@ -55,7 +55,6 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-secondary">
         {showPlaceholder && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground/40">
-            <span className="text-5xl">🍳</span>
             <span className="font-heading text-[9px] uppercase tracking-[0.2em]">Photo coming soon</span>
           </div>
         )}

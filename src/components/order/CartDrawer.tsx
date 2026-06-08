@@ -15,68 +15,93 @@ const CartDrawer: React.FC = () => {
       <div
         className="fixed inset-0 bg-black/50 z-40 transition-opacity"
         onClick={closeCart}
+        aria-hidden="true"
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-2xl flex flex-col">
+      <div
+        className="fixed right-0 top-0 h-full w-full max-w-md bg-[#FFFCF9] z-50 shadow-2xl flex flex-col"
+        role="dialog"
+        aria-label="Your order"
+        aria-modal="true"
+      >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-[#C84B31]" />
-            <h2 className="text-lg font-bold text-gray-900">Your Order</h2>
+        <div className="flex items-center justify-between px-6 py-5 border-b border-[#F5F0EB]">
+          <div className="flex items-center gap-3">
+            <ShoppingBag className="w-5 h-5 text-primary" />
+            <h2 className="font-heading text-sm uppercase tracking-[0.2em] text-foreground">Your Order</h2>
             {count > 0 && (
-              <span className="bg-[#C84B31] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              <span className="bg-primary text-white text-[10px] font-heading rounded-full w-5 h-5 flex items-center justify-center">
                 {count}
               </span>
             )}
           </div>
-          <button onClick={closeCart} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <X className="w-5 h-5 text-gray-500" />
+          <button
+            onClick={closeCart}
+            className="flex h-9 w-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Close cart"
+          >
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Items */}
         <div className="flex-1 overflow-y-auto px-6 py-4">
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center">
-              <ShoppingBag className="w-12 h-12 text-gray-200 mb-3" />
-              <p className="text-gray-400 font-medium">Your cart is empty</p>
-              <p className="text-gray-300 text-sm mt-1">Add something delicious!</p>
+            <div className="flex flex-col items-center justify-center h-full text-center gap-4">
+              <ShoppingBag className="w-10 h-10 text-muted-foreground/20" />
+              <div>
+                <p className="font-heading text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Your cart is empty
+                </p>
+                <p className="mt-1 font-heading-light text-sm text-muted-foreground/60">
+                  Add something delicious to get started.
+                </p>
+              </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="flex flex-col gap-3">
               {items.map((item) => (
-                <div key={item.id} className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
+                <div key={item.id} className="flex items-center gap-3 border border-[#F5F0EB] bg-white p-3">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-14 h-14 rounded-lg object-cover bg-gray-200"
-                    onError={(e) => { (e.target as HTMLImageElement).src = "/images/placeholder.png"; }}
+                    className="w-14 h-14 object-cover bg-secondary flex-shrink-0"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm text-gray-900 truncate">{item.name}</p>
-                    <p className="text-[#C84B31] font-bold text-sm">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-heading text-[11px] uppercase tracking-[0.1em] text-foreground truncate">
+                      {item.name}
+                    </p>
+                    <p className="mt-0.5 font-heading text-sm text-primary">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2">
                     <button
                       onClick={() => updateQty(item.id, item.quantity - 1)}
-                      className="w-7 h-7 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors"
+                      className="flex h-7 w-7 items-center justify-center border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                      aria-label="Decrease quantity"
                     >
-                      <Minus className="w-3 h-3 text-gray-600" />
+                      <Minus className="w-3 h-3" />
                     </button>
-                    <span className="w-6 text-center text-sm font-bold text-gray-800">{item.quantity}</span>
+                    <span className="w-5 text-center font-heading text-sm text-foreground">
+                      {item.quantity}
+                    </span>
                     <button
                       onClick={() => updateQty(item.id, item.quantity + 1)}
-                      className="w-7 h-7 rounded-full bg-[#C84B31] flex items-center justify-center hover:bg-[#a83b25] transition-colors"
+                      className="flex h-7 w-7 items-center justify-center bg-primary text-white transition-colors hover:bg-primary/90"
+                      aria-label="Increase quantity"
                     >
-                      <Plus className="w-3 h-3 text-white" />
+                      <Plus className="w-3 h-3" />
                     </button>
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="p-1 hover:bg-red-50 rounded-full transition-colors ml-1"
+                    className="ml-1 flex h-7 w-7 items-center justify-center text-muted-foreground/40 transition-colors hover:text-destructive"
+                    aria-label={`Remove ${item.name}`}
                   >
-                    <Trash2 className="w-4 h-4 text-gray-300 hover:text-red-400" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
               ))}
@@ -86,17 +111,21 @@ const CartDrawer: React.FC = () => {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="px-6 py-4 border-t border-gray-100 bg-white">
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-gray-600 font-medium">Subtotal</span>
-              <span className="text-xl font-bold text-gray-900">${total.toFixed(2)}</span>
+          <div className="px-6 py-5 border-t border-[#F5F0EB] bg-[#FFFCF9]">
+            <div className="flex justify-between items-baseline mb-5">
+              <span className="font-heading text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                Subtotal
+              </span>
+              <span className="font-display text-2xl text-foreground">${total.toFixed(2)}</span>
             </div>
-            <p className="text-xs text-gray-400 mb-3 text-center">🛍️ Pickup only — ready in under 5 minutes</p>
+            <p className="font-heading-light text-[11px] text-muted-foreground/60 mb-4 text-center">
+              Pick up in store — ready in under 5 minutes
+            </p>
             <button
               onClick={() => setShowCheckout(true)}
-              className="w-full bg-[#C84B31] hover:bg-[#a83b25] text-white font-bold py-4 rounded-xl transition-colors text-base"
+              className="w-full bg-primary text-white font-heading text-[11px] uppercase tracking-[0.2em] py-4 transition-colors hover:bg-primary/90"
             >
-              Proceed to Checkout → ${total.toFixed(2)}
+              Checkout — ${total.toFixed(2)}
             </button>
           </div>
         )}

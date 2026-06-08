@@ -15,11 +15,11 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 function getPickupSlots(): string[] {
   const slots: string[] = [];
   const now = new Date();
-  const start = new Date(now.getTime() + 15 * 60 * 1000); // earliest: 15 min from now
+  const start = new Date(now.getTime() + 15 * 60 * 1000);
   start.setMinutes(Math.ceil(start.getMinutes() / 15) * 15, 0, 0);
 
   const close = new Date();
-  close.setHours(21, 0, 0, 0); // 9pm close
+  close.setHours(21, 0, 0, 0);
 
   for (let t = new Date(start); t <= close; t = new Date(t.getTime() + 15 * 60 * 1000)) {
     slots.push(t.toLocaleTimeString("en-AU", { hour: "2-digit", minute: "2-digit", hour12: true }));
@@ -80,19 +80,19 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ name, phone, pickupTime, onSu
     <form onSubmit={handleSubmit} className="space-y-4">
       <PaymentElement options={{ layout: "tabs" }} />
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-red-600 text-sm">
+        <div className="border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
           {error}
         </div>
       )}
       <button
         type="submit"
         disabled={!stripe || loading}
-        className="w-full bg-[#C84B31] hover:bg-[#a83b25] disabled:bg-gray-300 text-white font-bold py-4 rounded-xl transition-colors text-base"
+        className="w-full bg-primary hover:bg-primary/90 disabled:bg-muted text-white font-heading text-[11px] uppercase tracking-[0.2em] py-4 transition-colors"
       >
-        {loading ? "Processing..." : `Pay Now & Place Order`}
+        {loading ? "Processing..." : `Pay Now — Place Order`}
       </button>
-      <p className="text-xs text-center text-gray-400">
-        🔒 Secured by Stripe · Your pickup will be ready at {pickupTime}
+      <p className="font-heading-light text-[11px] text-center text-muted-foreground">
+        Secured by Stripe · Pickup ready at {pickupTime}
       </p>
     </form>
   );
@@ -134,7 +134,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
         body: JSON.stringify({
           items: items.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
           customer: { name, phone, pickupTime },
-          amount: Math.round(total * 100), // cents
+          amount: Math.round(total * 100),
         }),
       });
 
@@ -149,164 +149,187 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
     }
   };
 
+  const inputClass = "w-full border border-border bg-white px-4 py-3 font-heading-light text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors";
+
   return (
-    <>
-      <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div className="bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl max-h-[95vh] overflow-y-auto">
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
-            <div>
-              <h2 className="text-lg font-bold text-gray-900">
-                {step === "details" && "Pickup Details"}
-                {step === "payment" && "Payment"}
-                {step === "success" && "Order Confirmed! 🎉"}
-              </h2>
-              {step !== "success" && (
-                <p className="text-sm text-gray-400">THE WOKBOWL · Neutral Bay</p>
-              )}
+    <div
+      className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Checkout"
+    >
+      <div className="bg-[#FFFCF9] w-full sm:max-w-lg max-h-[95vh] overflow-y-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-5 border-b border-[#F5F0EB] sticky top-0 bg-[#FFFCF9] z-10">
+          <div>
+            <h2 className="font-heading text-sm uppercase tracking-[0.2em] text-foreground">
+              {step === "details" && "Pickup Details"}
+              {step === "payment" && "Payment"}
+              {step === "success" && "Order Confirmed"}
+            </h2>
+            {step !== "success" && (
+              <p className="mt-0.5 font-heading-light text-[11px] text-muted-foreground">
+                THE WOKBOWL · Neutral Bay
+              </p>
+            )}
+          </div>
+          <button
+            onClick={onClose}
+            className="flex h-9 w-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Close"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="px-6 py-6">
+          {/* ── Success ── */}
+          {step === "success" && (
+            <div className="py-8 text-center">
+              <CheckCircle className="w-12 h-12 text-green-600 mx-auto mb-5" />
+              <h3 className="font-display text-2xl text-foreground mb-2">You've been Wok'd.</h3>
+              <p className="font-heading-light text-sm text-muted-foreground mb-1">Your order is being prepared.</p>
+              <p className="font-heading text-sm text-foreground mt-3 mb-6">
+                Ready for pickup at {pickupTime}
+              </p>
+              <div className="border border-[#F5F0EB] bg-secondary px-4 py-3 text-left mb-6">
+                <p className="font-heading text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
+                  Order Reference
+                </p>
+                <p className="font-mono text-[11px] text-muted-foreground break-all">{orderId}</p>
+              </div>
+              <button
+                onClick={onClose}
+                className="w-full bg-primary text-white font-heading text-[11px] uppercase tracking-[0.2em] py-4 transition-colors hover:bg-primary/90"
+              >
+                Done
+              </button>
             </div>
-            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <X className="w-5 h-5 text-gray-400" />
-            </button>
-          </div>
+          )}
 
-          <div className="px-6 py-5">
-            {/* ── Success ── */}
-            {step === "success" && (
-              <div className="text-center py-8">
-                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">You've been Wok'd! 🔥</h3>
-                <p className="text-gray-500 mb-1">Your order is being prepared.</p>
-                <p className="text-gray-700 font-semibold text-lg mb-6">Ready for pickup at {pickupTime}</p>
-                <div className="bg-gray-50 rounded-xl p-4 text-left mb-6">
-                  <p className="text-sm text-gray-500 mb-1">Order reference</p>
-                  <p className="font-mono text-xs text-gray-400 break-all">{orderId}</p>
+          {/* ── Details Form ── */}
+          {step === "details" && (
+            <form onSubmit={handleDetailsSubmit} className="space-y-5">
+              {/* Order summary */}
+              <div className="border border-[#F5F0EB] bg-secondary p-4 space-y-2">
+                {items.map((item) => (
+                  <div key={item.id} className="flex justify-between">
+                    <span className="font-heading-light text-sm text-foreground">
+                      {item.name} × {item.quantity}
+                    </span>
+                    <span className="font-heading text-sm text-foreground">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </span>
+                  </div>
+                ))}
+                <div className="border-t border-[#F5F0EB] pt-2 flex justify-between">
+                  <span className="font-heading text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                    Total
+                  </span>
+                  <span className="font-heading text-sm text-primary">${total.toFixed(2)}</span>
                 </div>
-                <button
-                  onClick={onClose}
-                  className="w-full bg-[#C84B31] text-white font-bold py-3 rounded-xl"
-                >
-                  Done
-                </button>
               </div>
-            )}
 
-            {/* ── Details Form ── */}
-            {step === "details" && (
-              <form onSubmit={handleDetailsSubmit} className="space-y-5">
-                {/* Order summary */}
-                <div className="bg-gray-50 rounded-xl p-4 space-y-2">
-                  {items.map((item) => (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-gray-700">{item.name} × {item.quantity}</span>
-                      <span className="font-semibold text-gray-900">${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
+              {/* Name */}
+              <div>
+                <label className="block font-heading text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-2">
+                  <User className="w-3.5 h-3.5 inline mr-1.5" />Your Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Alex"
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className="block font-heading text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-2">
+                  <Phone className="w-3.5 h-3.5 inline mr-1.5" />Mobile
+                </label>
+                <input
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="04XX XXX XXX"
+                  className={inputClass}
+                />
+              </div>
+
+              {/* Pickup time */}
+              <div>
+                <label className="block font-heading text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-2">
+                  <Clock className="w-3.5 h-3.5 inline mr-1.5" />Pickup Time
+                </label>
+                <select
+                  required
+                  value={pickupTime}
+                  onChange={(e) => setPickupTime(e.target.value)}
+                  className={inputClass}
+                >
+                  {slots.map((slot) => (
+                    <option key={slot} value={slot}>{slot}</option>
                   ))}
-                  <div className="border-t border-gray-200 pt-2 flex justify-between font-bold">
-                    <span>Total</span>
-                    <span className="text-[#C84B31]">${total.toFixed(2)}</span>
-                  </div>
-                </div>
-
-                {/* Name */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                    <User className="w-4 h-4 inline mr-1" />Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Alex"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-[#C84B31] transition-colors"
-                  />
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                    <Phone className="w-4 h-4 inline mr-1" />Phone *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="04XX XXX XXX"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-[#C84B31] transition-colors"
-                  />
-                </div>
-
-                {/* Pickup time */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                    <Clock className="w-4 h-4 inline mr-1" />Pickup Time *
-                  </label>
-                  <select
-                    required
-                    value={pickupTime}
-                    onChange={(e) => setPickupTime(e.target.value)}
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:border-[#C84B31] transition-colors"
-                  >
-                    {slots.map((slot) => (
-                      <option key={slot} value={slot}>{slot}</option>
-                    ))}
-                  </select>
-                  <p className="text-xs text-gray-400 mt-1">📍 Shop 21, 116 Military Rd, Neutral Bay</p>
-                </div>
-
-                {error && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-red-600 text-sm">
-                    {error}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#C84B31] hover:bg-[#a83b25] disabled:bg-gray-300 text-white font-bold py-4 rounded-xl transition-colors text-base"
-                >
-                  {loading ? "Preparing..." : `Continue to Payment → $${total.toFixed(2)}`}
-                </button>
-              </form>
-            )}
-
-            {/* ── Payment ── */}
-            {step === "payment" && clientSecret && (
-              <div className="space-y-4">
-                <div className="bg-green-50 border border-green-100 rounded-xl px-4 py-3 text-sm text-green-700">
-                  ✅ Order for <strong>{name}</strong> · Pickup at <strong>{pickupTime}</strong>
-                </div>
-                <Elements
-                  stripe={stripePromise}
-                  options={{
-                    clientSecret,
-                    appearance: {
-                      theme: "stripe",
-                      variables: { colorPrimary: "#C84B31" },
-                    },
-                  }}
-                >
-                  <PaymentForm
-                    name={name}
-                    phone={phone}
-                    pickupTime={pickupTime}
-                    onSuccess={(id) => { setOrderId(id); setStep("success"); }}
-                  />
-                </Elements>
-                <button
-                  onClick={() => setStep("details")}
-                  className="w-full text-gray-400 text-sm py-2 hover:text-gray-600 transition-colors"
-                >
-                  ← Back to details
-                </button>
+                </select>
+                <p className="mt-1.5 font-heading-light text-[11px] text-muted-foreground">
+                  Shop 21, 116 Military Road, Neutral Bay
+                </p>
               </div>
-            )}
-          </div>
+
+              {error && (
+                <div className="border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-primary hover:bg-primary/90 disabled:bg-muted text-white font-heading text-[11px] uppercase tracking-[0.2em] py-4 transition-colors"
+              >
+                {loading ? "Preparing..." : `Continue to Payment — $${total.toFixed(2)}`}
+              </button>
+            </form>
+          )}
+
+          {/* ── Payment ── */}
+          {step === "payment" && clientSecret && (
+            <div className="space-y-4">
+              <div className="border border-green-200 bg-green-50 px-4 py-3 font-heading-light text-sm text-green-700">
+                Order for <strong>{name}</strong> · Pickup at <strong>{pickupTime}</strong>
+              </div>
+              <Elements
+                stripe={stripePromise}
+                options={{
+                  clientSecret,
+                  appearance: {
+                    theme: "stripe",
+                    variables: { colorPrimary: "#FF6B00" },
+                  },
+                }}
+              >
+                <PaymentForm
+                  name={name}
+                  phone={phone}
+                  pickupTime={pickupTime}
+                  onSuccess={(id) => { setOrderId(id); setStep("success"); }}
+                />
+              </Elements>
+              <button
+                onClick={() => setStep("details")}
+                className="w-full font-heading-light text-[11px] text-muted-foreground py-2 transition-colors hover:text-foreground"
+              >
+                Back to details
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
