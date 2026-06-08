@@ -2,9 +2,9 @@ import { platformLinks } from "@/data/platformLinks";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const platforms = [
-  { ...platformLinks.ubereats, emoji: "🛵" },
-  { ...platformLinks.doordash, emoji: "🚗" },
-  { ...platformLinks.menulog, emoji: "🍜" },
+  { ...platformLinks.ubereats },
+  { ...platformLinks.doordash },
+  { ...platformLinks.pickup },
 ];
 
 const OrderCTA = () => {
@@ -38,11 +38,10 @@ const OrderCTA = () => {
               href={p.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex min-h-[52px] items-center gap-2 rounded-none border border-white/30 bg-white/10 px-8 py-3 font-heading text-[10px] uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-primary scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
+              className={`inline-flex min-h-[52px] items-center rounded-none border border-white/30 bg-white/10 px-8 py-3 font-heading text-[10px] uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-primary scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
               style={{ transitionDelay: isVisible ? `${(i + 2) * 100}ms` : "0ms" }}
-              aria-label={"Order on " + p.label}
+              aria-label={p.cta}
             >
-              <span aria-hidden="true">{p.emoji}</span>
               {p.label}
             </a>
           ))}

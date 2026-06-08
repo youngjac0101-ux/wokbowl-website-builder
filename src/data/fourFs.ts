@@ -1,22 +1,22 @@
 export const fourFs = [
   {
-    emoji: "⚡",
+    icon: null,
     title: "FAST",
-    description: "Wok-fired in 45 seconds. Ready in under 5 minutes.",
+    description: "Wok-fired in 45 seconds. Your bowl is ready in under 5 minutes. No waiting, no compromise.",
   },
   {
-    emoji: "🌏",
+    icon: null,
     title: "FUSION",
-    description: "Chinese wok meets Australian palate.",
+    description: "Chinese wok technique meets Australian produce and palate. Bold flavours, familiar comfort.",
   },
   {
-    emoji: "🥬",
+    icon: null,
     title: "FRESH",
-    description: "Made to order. No hidden pre-made meals.",
+    description: "Made to order, every single time. No bain-marie. No pre-made meals sitting under a lamp.",
   },
   {
-    emoji: "🤖",
+    icon: null,
     title: "FUTURE",
-    description: "Robotic woks. AI-powered kitchen.",
+    description: "Robotic woks. AI-powered kitchen. Consistent heat, perfect wok hei — every bowl, every time.",
   },
 ] as const;

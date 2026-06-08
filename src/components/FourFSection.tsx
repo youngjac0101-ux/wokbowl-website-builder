@@ -27,11 +27,10 @@ const FourFSection = () => {
               className={`group p-10 text-center transition-colors duration-300 hover:bg-secondary scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
               style={{ transitionDelay: isVisible ? `${(i + 2) * 100}ms` : "0ms" }}
             >
-              <div className="mb-6 text-5xl" aria-hidden="true">{item.emoji}</div>
-              <h3 className="font-heading text-sm uppercase tracking-[0.2em] text-foreground">
+                <h3 className="font-heading text-sm uppercase tracking-[0.2em] text-foreground">
                 {item.title}
               </h3>
-              <p className="mt-3 font-heading-light text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              <p className="mt-4 font-heading-light text-sm leading-relaxed text-muted-foreground">{item.description}</p>
             </div>
           ))}
         </div>

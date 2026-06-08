@@ -3,21 +3,18 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 const steps = [
   {
     number: "01",
-    emoji: "🥢",
     title: "PICK YOUR BOWL",
-    text: "Choose your favourite wok-fired bowl and base.",
+    text: "Browse our menu — wok bowls, fried rice, noodles, wings or dim sum bites. Everything made to order.",
   },
   {
     number: "02",
-    emoji: "🔥",
     title: "WE WOK IT FRESH",
-    text: "Our robotic woks stir-fry your meal in 45 seconds flat.",
+    text: "Our robotic woks stir-fry your meal at 300°C in 45 seconds flat. Real wok hei, every time.",
   },
   {
     number: "03",
-    emoji: "✅",
     title: "READY IN MINUTES",
-    text: "Grab your freshly wok'd bowl. Dine in or take away.",
+    text: "Your freshly wok'd bowl is ready in under 5 minutes. Dine in, take away, or order delivery.",
   },
 ] as const;
 
@@ -46,17 +43,15 @@ const HowItWorks = () => {
               className={`flex flex-col items-center text-center scroll-hidden ${isVisible ? "scroll-visible" : ""}`}
               style={{ transitionDelay: isVisible ? `${(i + 2) * 150}ms` : "0ms" }}
             >
-              <span className="font-display text-7xl text-foreground/8 md:text-8xl">
+              <span className="font-display text-7xl text-foreground/[0.08] md:text-8xl" aria-hidden="true">
                 {step.number}
               </span>
-
-              <div className="mt-4 text-3xl" aria-hidden="true">{step.emoji}</div>
 
               <h3 className="mt-6 font-heading text-sm uppercase tracking-[0.2em] text-foreground">
                 {step.title}
               </h3>
 
-              <p className="mt-3 max-w-[240px] font-heading-light text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-3 max-w-[260px] font-heading-light text-sm leading-relaxed text-muted-foreground">
                 {step.text}
               </p>
             </div>
