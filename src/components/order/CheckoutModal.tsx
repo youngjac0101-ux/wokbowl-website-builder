@@ -115,6 +115,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [consentSms, setConsentSms] = useState(true);
   const [pickupTime, setPickupTime] = useState("");
   const slots = getPickupSlots();
 
@@ -133,7 +135,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: items.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
-          customer: { name, phone, pickupTime },
+          customer: { name, phone, email, pickupTime, consentSms },
           amount: Math.round(total * 100),
         }),
       });
@@ -279,6 +281,33 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
                   Shop 21, 116 Military Road, Neutral Bay
                 </p>
               </div>
+
+              {/* Email (optional) */}
+              <div>
+                <label className="block font-heading text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-2">
+                  Email <span className="normal-case tracking-normal">(optional)</span>
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className={inputClass}
+                />
+              </div>
+
+              {/* SMS consent */}
+              <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={consentSms}
+                  onChange={(e) => setConsentSms(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 accent-primary"
+                />
+                <span className="font-heading-light text-[12px] text-muted-foreground leading-snug">
+                  Send me a welcome offer & occasional deals by SMS. Unsubscribe anytime.
+                </span>
+              </label>
 
               {error && (
                 <div className="border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">

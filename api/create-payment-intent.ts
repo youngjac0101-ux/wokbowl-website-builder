@@ -29,6 +29,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       metadata: {
         customer_name: customer.name,
         customer_phone: customer.phone,
+        customer_email: customer.email ?? "",
+        consent_sms: customer.consentSms ? "true" : "false",
         pickup_time: customer.pickupTime,
         order_summary: orderLines.substring(0, 500),
         source: "wokbowl-website",
