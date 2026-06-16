@@ -130,7 +130,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
     setError(null);
 
     try {
-      const res = await fetch("/api/create-payment-intent", {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/website-create-payment-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
