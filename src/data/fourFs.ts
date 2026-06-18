@@ -2,7 +2,7 @@ export const fourFs = [
   {
     icon: null,
     title: "FAST",
-    description: "Wok-fired in 45 seconds. Your bowl is ready in under 5 minutes. No waiting, no compromise.",
+    description: "Wok-fired to order and ready in under 5 minutes. No waiting, no compromise.",
   },
   {
     icon: null,
@@ -16,7 +16,7 @@ export const fourFs = [
   },
   {
     icon: null,
-    title: "FUTURE",
-    description: "Robotic woks. AI-powered kitchen. Consistent heat, perfect wok hei — every bowl, every time.",
+    title: "FLAVOUR",
+    description: "House-made sauces, bold spice, built from scratch — never from a jar. Real wok flavour in every bowl.",
   },
 ] as const;

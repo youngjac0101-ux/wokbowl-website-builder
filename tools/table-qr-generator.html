@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>THE WOKBOWL · 桌号二维码生成器</title>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 24px; color: #1a1a1a; background:#FFFCF9; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  p.sub { color:#666; font-size:13px; margin:0 0 16px; }
+  .controls { display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; margin-bottom:20px; }
+  label { display:block; font-size:12px; color:#666; margin-bottom:4px; }
+  input { border:1px solid #ddd; border-radius:8px; padding:8px 10px; font-size:14px; width:260px; }
+  input.small { width:90px; }
+  button { background:#E8590C; color:#fff; border:none; border-radius:8px; padding:9px 18px; font-size:14px; cursor:pointer; }
+  button.ghost { background:#fff; color:#E8590C; border:1px solid #E8590C; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:16px; }
+  .card { border:1px solid #eee; border-radius:12px; padding:16px; text-align:center; background:#fff; page-break-inside:avoid; }
+  .card .qr { display:flex; justify-content:center; margin:8px 0; }
+  .card .tno { font-size:22px; font-weight:700; }
+  .card .hint { font-size:11px; color:#888; margin-top:6px; }
+  @media print {
+    .controls, h1, p.sub { display:none; }
+    body { padding:0; background:#fff; }
+    .grid { grid-template-columns:repeat(3,1fr); gap:10px; }
+  }
+</style>
+</head>
+<body>
+  <h1>桌号二维码生成器 · THE WOKBOWL</h1>
+  <p class="sub">输入桌数 → 生成 → 打印贴桌上。顾客扫码进 <code>?table=N</code> 点餐，订单自动带桌号进后厨看板。</p>
+  <div class="controls">
+    <div>
+      <label>网站地址（base URL）</label>
+      <input id="base" value="https://thewokbowl.com.au" />
+    </div>
+    <div>
+      <label>桌数</label>
+      <input id="count" class="small" type="number" value="12" min="1" max="200" />
+    </div>
+    <button onclick="gen()">生成</button>
+    <button class="ghost" onclick="window.print()">打印</button>
+  </div>
+  <div id="grid" class="grid"></div>
+<script>
+  function gen() {
+    var base = document.getElementById('base').value.replace(/\/+$/,'');
+    var count = Math.max(1, Math.min(200, parseInt(document.getElementById('count').value||'1',10)));
+    var grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    for (var n=1; n<=count; n++) {
+      var url = base + '/?table=' + n;
+      var card = document.createElement('div'); card.className='card';
+      var tno = document.createElement('div'); tno.className='tno'; tno.textContent='Table ' + n;
+      var qr = document.createElement('div'); qr.className='qr';
+      var hint = document.createElement('div'); hint.className='hint'; hint.textContent='扫码点餐 · Scan to order';
+      card.appendChild(tno); card.appendChild(qr); card.appendChild(hint);
+      grid.appendChild(card);
+      new QRCode(qr, { text: url, width: 160, height: 160, correctLevel: QRCode.CorrectLevel.M });
+    }
+  }
+  gen();
+</script>
+</body>
+</html>

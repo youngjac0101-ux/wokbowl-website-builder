@@ -26,7 +26,7 @@ export const siteConfig = {
   seo: {
     title: "The WOKBOWL — Sydney Asian Kitchen | Neutral Bay",
     description:
-      "Fast. Fresh. Fusion. Wok. — Wok-fired bowls, crispy wings and dim sum bites at Neutral Bay, Sydney. Order UberEats or DoorDash. Open 7 days.",
+      "Neutral Bay's neighbourhood wok kitchen. Fresh, made-to-order Asian bowls, crispy wings and dim sum bites — wok-fired with Australian produce. Order direct for pickup, ready in minutes. Open 7 days.",
     ogImage: "/images/brand/og-image.jpg",
   },
 

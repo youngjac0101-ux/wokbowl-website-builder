@@ -130,6 +130,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
     setError(null);
 
     try {
+      // Dine-in via table QR: thewokbowl.com.au/?table=5 → carries table_no into the order.
+      const tableNo = new URLSearchParams(window.location.search).get("table")?.trim() || undefined;
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_FUNCTIONS_URL}/website-create-payment-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -137,6 +139,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
           items: items.map((i) => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity })),
           customer: { name, phone, email, pickupTime, consentSms },
           amount: Math.round(total * 100),
+          table_no: tableNo,
+          order_type: tableNo ? "dine_in" : "pickup",
         }),
       });
 

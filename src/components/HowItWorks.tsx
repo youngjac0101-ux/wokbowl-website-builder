@@ -9,7 +9,7 @@ const steps = [
   {
     number: "02",
     title: "WE WOK IT FRESH",
-    text: "Our robotic woks stir-fry your meal at 300°C in 45 seconds flat. Real wok hei, every time.",
+    text: "Wok-fired fresh to order — bold, real wok flavour in every bowl.",
   },
   {
     number: "03",

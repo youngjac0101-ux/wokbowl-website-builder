@@ -6,7 +6,7 @@ const FourFSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section id="story" className="bg-background py-28 md:py-40" aria-label="Why The WOKBOWL">
+    <section id="why" className="bg-background py-28 md:py-40" aria-label="Why The WOKBOWL">
       <div className="container mx-auto px-6 lg:px-8" ref={ref}>
         <p
           className={`text-center font-heading text-[11px] uppercase tracking-[0.3em] text-muted-foreground scroll-hidden ${isVisible ? "scroll-visible" : ""}`}

@@ -3,6 +3,7 @@ import { Plus, Check } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import { VERIFIED_PHOTO_IDS } from "@/data/menuPhotos";
 
 const tagConfig: Record<string, { label: string; className: string }> = {
   popular: {
@@ -41,7 +42,10 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const showPlaceholder = imgError || !imgLoaded;
+  // Only items with a verified, name-matched photo show a real image. Everything
+  // else gets the elegant placeholder — no wrong/duplicated dishes on the menu.
+  const hasVerifiedPhoto = VERIFIED_PHOTO_IDS.has(item.id);
+  const showPlaceholder = !hasVerifiedPhoto || imgError || !imgLoaded;
 
   return (
     <div
@@ -54,21 +58,24 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
       {/* Image — large 4:3 hero area */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-secondary">
         {showPlaceholder && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground/40">
-            <span className="font-heading text-[9px] uppercase tracking-[0.2em]">Photo coming soon</span>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-secondary text-muted-foreground/45">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary/40" aria-hidden="true" />
+            <span className="font-heading text-[9px] uppercase tracking-[0.25em]">Photo coming soon</span>
           </div>
         )}
-        <img
-          src={`${item.image}?v=${import.meta.env.VITE_MENU_IMAGE_VERSION ?? "1"}`}
-          alt={item.name}
-          loading="lazy"
-          className={cn(
-            "h-full w-full object-cover transition-transform duration-700 group-hover:scale-105",
-            showPlaceholder ? "opacity-0" : "opacity-100"
-          )}
-          onLoad={() => setImgLoaded(true)}
-          onError={() => setImgError(true)}
-        />
+        {hasVerifiedPhoto && (
+          <img
+            src={`${item.image}?v=${import.meta.env.VITE_MENU_IMAGE_VERSION ?? "1"}`}
+            alt={item.name}
+            loading="lazy"
+            className={cn(
+              "h-full w-full object-cover transition-transform duration-700 group-hover:scale-105",
+              imgError || !imgLoaded ? "opacity-0" : "opacity-100"
+            )}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgError(true)}
+          />
+        )}
       </div>
 
       {/* Content — generous spacing */}
