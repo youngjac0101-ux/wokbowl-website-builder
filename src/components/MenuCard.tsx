@@ -3,7 +3,7 @@ import { Plus, Check } from "lucide-react";
 import type { MenuItem } from "@/data/menu";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
-import { VERIFIED_PHOTO_IDS } from "@/data/menuPhotos";
+import { MENU_PHOTOS } from "@/data/menuPhotos";
 
 const tagConfig: Record<string, { label: string; className: string }> = {
   popular: {
@@ -42,10 +42,11 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
     setTimeout(() => setAdded(false), 1500);
   };
 
-  // Only items with a verified, name-matched photo show a real image. Everything
-  // else gets the elegant placeholder — no wrong/duplicated dishes on the menu.
-  const hasVerifiedPhoto = VERIFIED_PHOTO_IDS.has(item.id);
-  const showPlaceholder = !hasVerifiedPhoto || imgError || !imgLoaded;
+  // Photo source comes from the curated override map — not item.image — so only
+  // matched dishes show a real image; the rest get the elegant placeholder.
+  const photoSrc = MENU_PHOTOS[item.id];
+  const hasPhoto = Boolean(photoSrc);
+  const showPlaceholder = !hasPhoto || imgError || !imgLoaded;
 
   return (
     <div
@@ -63,9 +64,9 @@ const MenuCard = ({ item, style, className }: MenuCardProps) => {
             <span className="font-heading text-[9px] uppercase tracking-[0.25em]">Photo coming soon</span>
           </div>
         )}
-        {hasVerifiedPhoto && (
+        {hasPhoto && (
           <img
-            src={`${item.image}?v=${import.meta.env.VITE_MENU_IMAGE_VERSION ?? "1"}`}
+            src={`${photoSrc}?v=${import.meta.env.VITE_MENU_IMAGE_VERSION ?? "1"}`}
             alt={item.name}
             loading="lazy"
             className={cn(
