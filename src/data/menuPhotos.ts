@@ -18,6 +18,8 @@ export const MENU_PHOTOS: Record<string, string> = {
   "traditional-honey-king-prawn-bowl": "/images/menu/gmb-honey-prawn.jpg",  // exact (GMB)
   "salt-pepper-prawns-bowl": "/images/menu/gmb-salt-pepper-prawn.jpg",      // exact (GMB)
   "hainanese-chicken-rice-bowl": "/images/menu/gmb-hainanese-chicken.jpg",  // exact (GMB)
+  "orange-chicken-bowl": "/images/menu/gmb-lemon-chicken.jpg",             // near-match (citrus-glazed chicken) — review
+  "kung-pao-chicken-bowl": "/images/menu/cashew-chicken.png",              // near-match (diced chicken + nuts) — review
 
   // ── Fried Rice ────────────────────────────────────────────────
   "chicken-fried-rice": "/images/menu/chicken-fried-rice.png",              // exact
