@@ -8,8 +8,9 @@ import {
 } from "@stripe/react-stripe-js";
 import { X, Clock, User, Phone, CheckCircle } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { STRIPE_PUBLISHABLE_KEY } from "@/data/stripe";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 // ─── Pickup time slots ─────────────────────────────────────────────────────
 function getPickupSlots(): string[] {
