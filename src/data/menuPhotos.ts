@@ -36,3 +36,4 @@ export const MENU_PHOTOS: Record<string, string> = {
   "fried-wontons-3pc": "/images/menu/web-44.jpg", // 44. Fried Wontons 3pc
   "fried-dumplings-3pc": "/images/menu/web-45.jpg", // 45. Fried Dumplings 3pc
   "prawn-crackers": "/images/menu/web-46.jpg", // 46. Prawn Crackers
+};
