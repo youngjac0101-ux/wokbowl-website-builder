@@ -12,7 +12,6 @@ type Section = { id: string; label: string; baseNote?: boolean };
 const sections: Section[] = [
   { id: "signature", label: "Signature Bowls", baseNote: true },
   { id: "byo", label: "Build Your Own", baseNote: true },
-  { id: "wraps", label: "Wraps" },
   { id: "fried-rice", label: "Fried Rice" },
   { id: "noodles", label: "Noodles" },
   { id: "wings", label: "Wings" },
