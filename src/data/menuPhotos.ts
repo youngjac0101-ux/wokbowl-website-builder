@@ -1,5 +1,5 @@
-// Menu photo overrides — itemId → image path. WOKBOWL pro shoot + named
-// originals + GMB, matched & verified by Jac. Unlisted items show placeholder.
+// Menu photo overrides — itemId → image. Source of truth:
+// ~/Desktop/WOKBOWL_Menu_Photos/{dish-number}.jpg  (run scripts/wire-menu-photos.py)
 export const MENU_PHOTOS: Record<string, string> = {
   "og-honey-chicken-bowl": "/images/menu/web-1.jpg", // 1. OG Honey Chicken
   "yuzu-honey-chicken-bowl": "/images/menu/web-2.jpg", // 2. Yuzu Honey Chicken
