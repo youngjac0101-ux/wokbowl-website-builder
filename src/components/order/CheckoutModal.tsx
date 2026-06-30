@@ -9,24 +9,9 @@ import {
 import { X, Clock, User, Phone, CheckCircle } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { STRIPE_PUBLISHABLE_KEY } from "@/data/stripe";
+import { getOrderingStatus } from "@/lib/hours";
 
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
-
-// ─── Pickup time slots ─────────────────────────────────────────────────────
-function getPickupSlots(): string[] {
-  const slots: string[] = [];
-  const now = new Date();
-  const start = new Date(now.getTime() + 15 * 60 * 1000);
-  start.setMinutes(Math.ceil(start.getMinutes() / 15) * 15, 0, 0);
-
-  const close = new Date();
-  close.setHours(21, 0, 0, 0);
-
-  for (let t = new Date(start); t <= close; t = new Date(t.getTime() + 15 * 60 * 1000)) {
-    slots.push(t.toLocaleTimeString("en-AU", { hour: "2-digit", minute: "2-digit", hour12: true }));
-  }
-  return slots.slice(0, 20);
-}
 
 // ─── Payment Form ──────────────────────────────────────────────────────────
 interface PaymentFormProps {
@@ -119,7 +104,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [consentSms, setConsentSms] = useState(true);
   const [pickupTime, setPickupTime] = useState("");
-  const slots = getPickupSlots();
+  const ordering = getOrderingStatus();
+  const slots = ordering.slots;
 
   useEffect(() => {
     if (slots.length > 0) setPickupTime(slots[0]);

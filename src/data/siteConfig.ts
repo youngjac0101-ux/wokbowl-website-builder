@@ -17,6 +17,22 @@ export const siteConfig = {
     { days: "Saturday – Sunday", time: "11:30 AM – 9:30 PM" },
   ],
 
+  // Machine-readable trading hours (minutes from midnight, Australia/Sydney).
+  // day index: 0 = Sunday … 6 = Saturday. Used to gate online ordering to
+  // business hours and to build pickup slots — keep in sync with `hours` above.
+  businessHours: {
+    0: { open: 11 * 60 + 30, close: 21 * 60 + 30 }, // Sun 11:30–21:30
+    1: { open: 11 * 60, close: 21 * 60 },            // Mon 11:00–21:00
+    2: { open: 11 * 60, close: 21 * 60 },            // Tue
+    3: { open: 11 * 60, close: 21 * 60 },            // Wed
+    4: { open: 11 * 60, close: 21 * 60 },            // Thu
+    5: { open: 11 * 60, close: 21 * 60 },            // Fri
+    6: { open: 11 * 60 + 30, close: 21 * 60 + 30 }, // Sat 11:30–21:30
+  } as Record<number, { open: number; close: number }>,
+
+  // Minutes the kitchen needs before a pickup slot is available.
+  pickupPrepMinutes: 15,
+
   socialLinks: {
     instagram: "https://instagram.com/thewokbowl",
     facebook: "https://facebook.com/thewokbowl",

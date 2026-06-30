@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { getOrderingStatus } from "@/lib/hours";
 import CheckoutModal from "./CheckoutModal";
 
 const CartDrawer: React.FC = () => {
   const { items, isOpen, closeCart, removeItem, updateQty, total, count } = useCart();
   const [showCheckout, setShowCheckout] = useState(false);
+  const ordering = getOrderingStatus();
 
   if (!isOpen) return null;
 
@@ -119,13 +121,16 @@ const CartDrawer: React.FC = () => {
               <span className="font-display text-2xl text-foreground">${total.toFixed(2)}</span>
             </div>
             <p className="font-heading-light text-[11px] text-muted-foreground/60 mb-4 text-center">
-              Pick up in store — ready in under 5 minutes
+              {ordering.open
+                ? "Pick up in store — ready in minutes"
+                : `Online ordering is closed · ${ordering.message}`}
             </p>
             <button
               onClick={() => setShowCheckout(true)}
-              className="w-full bg-primary text-white font-heading text-[11px] uppercase tracking-[0.2em] py-4 transition-colors hover:bg-primary/90"
+              disabled={!ordering.open}
+              className="w-full bg-primary text-white font-heading text-[11px] uppercase tracking-[0.2em] py-4 transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
             >
-              Checkout — ${total.toFixed(2)}
+              {ordering.open ? `Checkout — $${total.toFixed(2)}` : "Closed"}
             </button>
           </div>
         )}
