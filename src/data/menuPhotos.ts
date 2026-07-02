@@ -2,7 +2,6 @@
 // retained shots. Unlisted items show placeholder.
 export const MENU_PHOTOS: Record<string, string> = {
   "og-honey-chicken-bowl": "/images/menu/web-1.jpg", // 1. OG Honey Chicken
-  "yuzu-honey-chicken-bowl": "/images/menu/web-2.jpg", // 2. Yuzu Honey Chicken
   "traditional-honey-chicken-bowl": "/images/menu/web-3.jpg", // 3. Traditional Honey Chicken
   "mongolian-smoke-beef-bowl": "/images/menu/web-4.jpg", // 4. Mongolian Smoke Beef
   "sichuan-fire-beef-bowl": "/images/menu/web-6.jpg", // 6. Sichuan Fire Beef
